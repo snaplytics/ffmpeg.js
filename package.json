@@ -1,5 +1,5 @@
 {
-  "name": "ffmpeg.js",
+  "name": "@uqee/ffmpeg.js",
   "version": "3.1.9001",
   "description": "Port of FFmpeg with Emscripten",
   "main": "ffmpeg-webm.js",
