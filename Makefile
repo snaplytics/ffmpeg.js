@@ -261,7 +261,7 @@ FFMPEG_COMMON_ARGS = \
 	--disable-sdl \
 	--disable-securetransport \
 	--disable-xlib \
-	--disable-zlib
+	--enable-zlib
 
 build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 	cd build/ffmpeg-webm && \
@@ -269,6 +269,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 	patch -p1 < ../ffmpeg-disable-arc4random.patch && \
 	patch -p1 < ../ffmpeg-default-font.patch && \
 	patch -p1 < ../ffmpeg-disable-monotonic.patch && \
+	patch -p1 < ../ffmpeg-disable-lz.patch && \
 	EM_PKG_CONFIG_PATH=$(FFMPEG_WEBM_PC_PATH) emconfigure ./configure \
 		$(FFMPEG_COMMON_ARGS) \
 		$(addprefix --enable-encoder=,$(WEBM_ENCODERS)) \
@@ -277,7 +278,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 		--enable-libass \
 		--enable-libopus \
 		--enable-libvpx \
-		--extra-cflags="-I../libvpx/dist/include" \
+		--extra-cflags="-I../libvpx/dist/include -I/root/.emscripten_ports/zlib/zlib-version_1/" \
 		--extra-ldflags="-L../libvpx/dist/lib" \
 		&& \
 	emmake make -j8 && \
@@ -288,6 +289,7 @@ build/ffmpeg-mp4/ffmpeg.bc: $(MP4_SHARED_DEPS)
 	git reset --hard && \
 	patch -p1 < ../ffmpeg-disable-arc4random.patch && \
 	patch -p1 < ../ffmpeg-disable-monotonic.patch && \
+	patch -p1 < ../ffmpeg-disable-lz.patch && \
 	EM_PKG_CONFIG_PATH=$(FFMPEG_MP4_PC_PATH) emconfigure ./configure \
 		$(FFMPEG_COMMON_ARGS) \
 		$(addprefix --enable-encoder=,$(MP4_ENCODERS)) \
@@ -295,7 +297,7 @@ build/ffmpeg-mp4/ffmpeg.bc: $(MP4_SHARED_DEPS)
 		--enable-gpl \
 		--enable-libmp3lame \
 		--enable-libx264 \
-		--extra-cflags="-I../lame/dist/include" \
+		--extra-cflags="-I../lame/dist/include -I/root/.emscripten_ports/zlib/zlib-version_1/" \
 		--extra-ldflags="-L../lame/dist/lib" \
 		&& \
 	emmake make -j8 && \
@@ -306,6 +308,7 @@ build/ffmpeg-mp4/ffmpeg.bc: $(MP4_SHARED_DEPS)
 # for simple tests and 32M tends to run slower than 64M.
 EMCC_COMMON_ARGS = \
 	--closure 1 \
+	-s USE_ZLIB=1 \
 	-s TOTAL_MEMORY=67108864 \
 	-s OUTLINING_LIMIT=20000 \
 	-O3 --memory-init-file 0 \
