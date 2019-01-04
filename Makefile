@@ -6,7 +6,7 @@ PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
-COMMON_FILTERS = aresample scale crop overlay rotate
+COMMON_FILTERS = aresample scale crop overlay rotate amix adelay copy
 COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat
 COMMON_DECODERS = \
 	vp8 vp9 theora \
@@ -278,7 +278,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 		--enable-libass \
 		--enable-libopus \
 		--enable-libvpx \
-		--extra-cflags="-I../libvpx/dist/include -I/root/.emscripten_ports/zlib/zlib-version_1/" \
+		--extra-cflags="-I../libvpx/dist/include -I/root/zlib/" \
 		--extra-ldflags="-L../libvpx/dist/lib" \
 		&& \
 	emmake make -j8 && \
@@ -297,7 +297,7 @@ build/ffmpeg-mp4/ffmpeg.bc: $(MP4_SHARED_DEPS)
 		--enable-gpl \
 		--enable-libmp3lame \
 		--enable-libx264 \
-		--extra-cflags="-I../lame/dist/include -I/root/.emscripten_ports/zlib/zlib-version_1/" \
+		--extra-cflags="-I../lame/dist/include -I/root/zlib/" \
 		--extra-ldflags="-L../lame/dist/lib" \
 		&& \
 	emmake make -j8 && \

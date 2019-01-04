@@ -133,28 +133,12 @@ ffmpeg({
 ```
 
 ## Build instructions
-Tips, use a [docker](https://www.docker.com/) container (basic ubuntu is good)
-
 ```bash
-apt-get update
-apt-get -y install wget python git automake libtool build-essential cmake libglib2.0-dev closure-compiler
-
-cd /root # or /home/whatever
-wget https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz
-tar xzvf emsdk-portable.tar.gz
-cd emsdk-portable
-./emsdk update
-./emsdk install latest
-./emsdk activate latest
-source ./emsdk_env.sh
-
-cd /root # or /home/whatever
-git clone https://github.com/Kagami/ffmpeg.js.git
-cd ffmpeg.js
 git submodule init
 git submodule update --recursive
-
-make all
+docker build -t build_image .
+docker rm build_container && docker run --name build_container build_image
+docker cp build_container:/root/ffmpeg.js/ffmpeg-worker-mp4.js .
 ```
 
 ## Credits
