@@ -1,6 +1,6 @@
 FROM ubuntu
 RUN apt-get update
-RUN apt-get -y install wget python git automake libtool build-essential cmake libglib2.0-dev closure-compiler libz-dev sudo
+RUN apt-get -y install wget python git automake libtool build-essential cmake libglib2.0-dev closure-compiler
 
 USER root
 

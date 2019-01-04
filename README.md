@@ -137,7 +137,8 @@ ffmpeg({
 git submodule init
 git submodule update --recursive
 docker build -t build_image .
-docker rm build_container && docker run --name build_container build_image
+docker rm -f build_container
+docker run --name build_container build_image
 docker cp build_container:/root/ffmpeg.js/ffmpeg-worker-mp4.js .
 ```
 
