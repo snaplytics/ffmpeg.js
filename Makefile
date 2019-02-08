@@ -6,15 +6,15 @@ PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
-COMMON_FILTERS = aresample scale crop overlay rotate amix adelay copy
-COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat
+COMMON_FILTERS = aresample scale crop overlay rotate amix adelay copy anullsrc
+COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat null
 COMMON_DECODERS = \
 	vp8 vp9 theora \
 	mpeg2video mpeg4 h264 hevc \
 	png mjpeg \
 	vorbis opus \
 	mp3 ac3 aac \
-	ass ssa srt webvtt
+	ass ssa srt webvtt pcm_u8
 
 WEBM_MUXERS = webm ogg null image2
 WEBM_ENCODERS = libvpx_vp8 libopus mjpeg
@@ -205,7 +205,6 @@ build/x264/dist/lib/libx264.so:
 		\
 		--disable-avs \
 		--disable-swscale \
-		--disable-lavf \
 		--disable-ffms \
 		--disable-gpac \
 		--disable-lsmash \
@@ -244,6 +243,7 @@ FFMPEG_COMMON_ARGS = \
 	--enable-swresample \
 	--enable-swscale \
 	--enable-avfilter \
+	--enable-avdevice \
 	--disable-network \
 	--disable-d3d11va \
 	--disable-dxva2 \
@@ -253,6 +253,7 @@ FFMPEG_COMMON_ARGS = \
 	$(addprefix --enable-decoder=,$(COMMON_DECODERS)) \
 	$(addprefix --enable-demuxer=,$(COMMON_DEMUXERS)) \
 	--enable-protocol=file \
+	--enable-indev=lavfi \
 	$(addprefix --enable-filter=,$(COMMON_FILTERS)) \
 	--disable-bzlib \
 	--disable-iconv \
