@@ -204,8 +204,8 @@ build/x264/dist/lib/libx264.so:
 		--disable-thread \
 		--disable-asm \
 		\
+		--bit-depth=10 \
 		--disable-avs \
-		--disable-swscale \
 		--disable-ffms \
 		--disable-gpac \
 		--disable-lsmash \
@@ -299,8 +299,8 @@ build/ffmpeg-mp4/ffmpeg.bc: $(MP4_SHARED_DEPS)
 		--enable-gpl \
 		--enable-libmp3lame \
 		--enable-libx264 \
-		--extra-cflags="-I../lame/dist/include -I/root/zlib/" \
-		--extra-ldflags="-L../lame/dist/lib" \
+		--extra-cflags="-I../lame/dist/include -I/root/zlib/ -I../x264/dist/include" \
+		--extra-ldflags="-L../lame/dist/lib -L../x264/dist/lib" \
 		&& \
 	emmake make -j8 && \
 	cp ffmpeg ffmpeg.bc
