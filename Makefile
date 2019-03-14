@@ -6,7 +6,9 @@ PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
-COMMON_FILTERS = aresample scale crop overlay rotate amix adelay copy anullsrc volume
+COMMON_FILTERS = \
+	scale crop overlay rotate copy \
+  aresample amix adelay anullsrc aevalsrc volume concat
 COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat null gif
 COMMON_DECODERS = \
 	gif \
